@@ -15,7 +15,8 @@ if (firstUserInput === undefined || secondUserInput === undefined){
   throw new Error("You must input Repository Owner and Repository Name!");
   }
 
-//Takes values for Repo Owner and Repo Name, and provides filepath for Request module to return JSON containing user details. JSON parsed into JS Object and fed to cb callback.
+//Takes values for Repo Owner and Repo Name, and provides filepath for Request module to return JSON containing user details. J
+//JSON parsed into JS Object and fed to cb callback.
 function getRepoContributors(repoOwner, repoName, cb){
 
   var options = {
@@ -42,14 +43,13 @@ function downloadImageByURL (url, filePath) {
   .pipe(fs.createWriteStream(filePath));
 }
 
-// Prints file paths of Github user avatar images of Repo Owner and Repo Name provided by user. Saves user profile avatars to /avatars subdirectory
+// First, prints the names of the Github user avatar images (rather than the less user-friendly file path) of Repo Owner and Repo Name provided by user.
+// Second, saves user profile avatars to /avatars subdirectory and saves them according to their login name.
 getRepoContributors(firstUserInput, secondUserInput, function(err, result) {
   console.log("Errors:", err);
   for (var i in result){
     var githubUserFilePath = result[i]["avatar_url"];
-    console.log("GitHub User Avatar File Paths: ", githubUserFilePath);
-    downloadImageByURL(githubUserFilePath, './avatars/' + [i] + ".jpg");
+    console.log("Downloading: ", result[i]["login"] + ".jpg");
+    downloadImageByURL(githubUserFilePath, './avatars/' + result[i]["login"] + ".jpg");
   }
 })
-
-
