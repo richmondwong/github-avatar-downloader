@@ -1,11 +1,13 @@
 var request = require('request');
 var fs = require('fs');
-var token = require('./secrets')
-var userInput = process.argv.slice(2)
+var token = require('./secrets');
+var userInputFromTerminal = process.argv.slice(2);
+var firstUserInput = userInputFromTerminal[0];
+var secondUserInput = userInputFromTerminal[1];
 
-console.log(userInput[1])
-console.log(userInput[0])
-
+if (firstUserInput === undefined || secondUserInput === undefined){
+  throw new Error("You must input Repository Owner and Repository Name!")
+  }
 
 function getRepoContributors(repoOwner, repoName, cb){
 
@@ -33,7 +35,7 @@ request.get(url)
 .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(firstUserInput, secondUserInput, function(err, result) {
   console.log("Errors:", err);
 
   for (var i in result){
@@ -46,26 +48,4 @@ getRepoContributors("jquery", "jquery", function(err, result) {
   }
 });
 
-// downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
 
-// Original Code before Step 7
-
-// function getRepoContributors(repoOwner, repoName, cb){
-
-//   var options = {
-//     url: 'https://api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
-//     headers: {
-//       'User-Agent': 'request',
-//       'Authorization': token
-//     }
-//   };
-
-//   request(options, function (err, res, body) {
-//     cb(err, body);
-//   })
-// }
-
-// getRepoContributors("jquery", "jquery", function(err, result) {
-//   console.log("Errors:", err);
-//   console.log("Result:", result);
-// });
