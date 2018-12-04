@@ -1,6 +1,11 @@
 var request = require('request');
 var fs = require('fs');
 var token = require('./secrets')
+var userInput = process.argv.slice(2)
+
+console.log(userInput[1])
+console.log(userInput[0])
+
 
 function getRepoContributors(repoOwner, repoName, cb){
 
@@ -11,8 +16,6 @@ function getRepoContributors(repoOwner, repoName, cb){
       'Authorization': token
     }
   };
-
-  // request.setEncoding('utf8')
 
   request(options, function (err, res, body) {
     var parsedObject = JSON.parse(body)
@@ -25,7 +28,7 @@ function downloadImageByURL (url, filePath) {
 request.get(url)
 .on('error', function (err) {throw err;})
 .on('response', function (response) {
-  //console.log('Response Status Code:', response.statusCode)
+  // console.log('Response Status Code:', response.statusCode)
 })
 .pipe(fs.createWriteStream(filePath));
 }
