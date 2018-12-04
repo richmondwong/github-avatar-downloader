@@ -42,7 +42,7 @@ function downloadImageByURL (url, filePath) {
   .pipe(fs.createWriteStream(filePath));
 }
 
-// Prints file paths of Github user avatars of Repo Owner and Repo Name provided by user.
+// Prints file paths of Github user avatar images of Repo Owner and Repo Name provided by user. Saves user profile avatars to /avatars subdirectory
 getRepoContributors(firstUserInput, secondUserInput, function(err, result) {
   console.log("Errors:", err);
   for (var i in result){
